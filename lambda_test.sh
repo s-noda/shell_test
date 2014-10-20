@@ -19,5 +19,19 @@ function funcall(){
     )
 }
 
+function get_partial_func(){
+    FUNC=$1;
+    CNT=2;
+    while [ $CNT -le $# ];
+    do
+        SED="sed s/\\\$`expr $CNT - 1`/\$$CNT/g";
+        echo "echo \"$FUNC\" | $SED";
+        FUNC=`echo \"$FUNC\" | $SED`;
+        CNT=`expr $CNT + 1`;
+        echo $FUNC;
+    done
+    echo $FUNC;
+}
+
 ## funcall "$LAMBDA" 10 11 12
 ## eval "function hoge(){ echo 10; }"
