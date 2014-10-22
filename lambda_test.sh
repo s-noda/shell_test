@@ -19,14 +19,22 @@ function funcall(){
     )
 }
 
+function arg_expand(){
+    eval "echo $@";
+}
+
 function get_partial_func(){
     FUNC=$1;
     CNT=2;
     while [ $CNT -le $# ];
     do
-        SED="sed s/\\\$`expr $CNT - 1`/\$$CNT/g";
-        echo "echo \"$FUNC\" | $SED";
-        FUNC=`echo \"$FUNC\" | $SED`;
+        BUF="sed s/\\\$`expr $CNT - 1`/\$$CNT/g";
+        echo $BUF;
+        BUF=`arg_expand $BUF`;
+        echo $BUF;
+        BUF="echo \"$FUNC\" | $BUF";
+        echo $BUF;
+        FUNC=`eval $BUF`;
         CNT=`expr $CNT + 1`;
         echo $FUNC;
     done
@@ -35,3 +43,6 @@ function get_partial_func(){
 
 ## funcall "$LAMBDA" 10 11 12
 ## eval "function hoge(){ echo 10; }"
+## HOGE="hoge"; FUGA="fuga"; echo "echo \$HOGE \$2 \$3" | sed s/\$HOGE/$FUGA/g
+## HOGE="hoge"; FUGA="fuga"; BUF="echo \"echo \$HOGE \$2 \$3" | sed s/\$HOGE/$FUGA/g\""; echo $BUF; eval $BUF;
+## HOGE="hoge"; PIYO="HOGE"; FUGA=`eval "echo \"\$$PIYO\""`;
