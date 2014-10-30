@@ -33,9 +33,7 @@ do
             BUF="hoge";
         fi
         echo "$BUF($OUTTOPIC)";
-        rostopic pub -1 $OUTTOPIC std_msgs/String $BUF > /dev/null;
-        rostopic pub -1 $OUTTOPIC std_msgs/String $BUF > /dev/null;
-        rostopic pub -1 $OUTTOPIC std_msgs/String $BUF > /dev/null;
+        (TMP=0; while [ $TMP -lt 3 ]; do rostopic pub -1 $OUTTOPIC std_msgs/String $BUF > /dev/null; TMP=`expr $TMP + 1`; done) &
         ##
         BUF="";
     else
