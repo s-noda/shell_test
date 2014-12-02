@@ -9,7 +9,7 @@ do
     if [ "`echo $line | grep data\:`" ];
     then
 	BUF=`echo $line | sed "s/^\ *data\:\ \(.\+\)\ *$/\\1/g"`;
-	echo  "receive message: $BUF";
+	echo  "[ros_xdotool_mouse_move_sub] receive message: $BUF";
 	CNT=0;
 	CMD="xdotool mousemove ";
 	for val in `echo "$BUF" | sed "s/\[\|\]//g" | sed "s/[\,\|\ ]\+/\ /g"`;

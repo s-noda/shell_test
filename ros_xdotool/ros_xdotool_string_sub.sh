@@ -10,7 +10,7 @@ do
     then
         ## implement here
         BUF=`echo $BUF | sed "s/^\ *data\:\ \(.\+\)\ *$/\\1/g"`;
-        echo  "receive message: $BUF";
+        echo  "[ros_xdotool_string_sub] receive message: $BUF";
 	eval "$BUF";
         ##
         BUF="";
