@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="ros_xdotool" type="ros_xdotool_string_sub.sh"
+        name="ros_xdotool_string_sub" output="screen" />
+  <node pkg="ros_xdotool" type="ros_xdotool_click_sub.sh"
+        name="ros_xdotool_click_sub" output="screen" />
+  <node pkg="ros_xdotool" type="ros_xdotool_mouse_move_sub.sh"
+        name="ros_xdotool_mouse_move_sub" output="screen" />
+</launch>

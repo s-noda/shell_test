@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 MESSAGE="standby ros_xdotool_mouse_move_sub.sh";
-## rostopic pub -1 /ros_xdotool/mouse_move/vector std_msgs/Float32MultiArray "{data: [0,0]}";
+rostopic pub -1 /ros_xdotool/mouse_move/vector std_msgs/Float32MultiArray "{data: [0,0]}";
 echo $MESSAGE;
 
 rostopic echo "/ros_xdotool/mouse_move/vector" | while read line ;
