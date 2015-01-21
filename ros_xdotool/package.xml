@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package>
+  <name> ros_xdotool </name>
+  <description> xdotool utility ros wrapper </description>
+  <version>0.0.0</version>
+  <maintainer email="s-noda@jsk.t.u-tokyo.ac.jp">Noda Shintaro</maintainer>
+  <license>NYSL</license>
+  <export> </export>
+</package>
