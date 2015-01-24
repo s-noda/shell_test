@@ -2,9 +2,13 @@
 
 ## sudo aptitude install wmctrl;
 
-DEF_CMD="wmctrl -i -r 0x05400006 -e 0,";
-PARAM_X="0";
-PARAM_Y="0";
+PS1="\[\033[01;32m\]command_line_shell_controller\[\033[00m\]\$ ";
+WIN=`echo \`pwd\` | sed -e "s/\\//\\\\n/g" | tail -1`;
+WIN=`wmctrl -l | grep $WIN | tail -1 | sed -e "s/\ /\\n/g" | head -1`;
+
+DEF_CMD="wmctrl -i -r $WIN -e 0,";
+PARAM_X="60";
+PARAM_Y="20";
 PARAM_W="-1";
 PARAM_H="-1";
 
