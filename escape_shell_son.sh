@@ -3,10 +3,10 @@
 ## sudo aptitude install wmctrl;
 ## sudo apt-get install xautomation
 
-## sleep 3;
+sleep 1;
 
 PS1="\[\033[01;32m\]escape_shell\[\033[00m\]\$ ";
-WIN=`echo \`pwd\` | sed -e "s/\\//\\\\n/g" | tail -1`;
+WIN="Terminal";
 WIN=`wmctrl -l | grep $WIN | tail -1 | sed -e "s/\ /\\n/g" | head -1`;
 
 echo $WIN > /tmp/escape_shell.pid;
