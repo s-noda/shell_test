@@ -2,10 +2,12 @@ window_placer
 ==========
 
 <h3> USAGE </h3>
+<div>
+  source window_placer.sh; place_windows_from_string
+  "$TARGET_WINDOW_ID_PATTERN" "$WINDOW_W" "$WINDOW_H" "$START_X" "$START_Y"
+  "$MARGIX_X" "$MARGIN_Y";
+</div>
 <ul>
-  <li>source window_placer.sh; place_windows_from_string
-    "TARGET_WINDOW_ID_PATTERN" "WINDOW_W" "WINDOW_H" "START_X" "START_Y"
-    "MARGIX_X" "MARGIN_Y"; </li>
   <li> "TARGET_WINDOW_ID_PATTERN": Use to select place target window,
     such as grep `wmctrl -l -G` "TARGET_WINDOW_ID_PATTERN". </li>
   <li> "WINDOW_W|H": Target window size. </li>
