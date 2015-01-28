@@ -9,9 +9,10 @@ window_placer
 </div>
 <ul>
   <li> "TARGET_WINDOW_ID_PATTERN": Use to select place target window,
-    such as grep `wmctrl -l -G` "TARGET_WINDOW_ID_PATTERN". </li>
+    such as  `wmctrl -l -G | grep "$TARGET_WINDOW_ID_PATTERN"`. </li>
   <li> "WINDOW_W|H": Target window size. </li>
-  <li> "START_X|Y": Initial position for placing windows. </li>
+  <li> "START_X|Y": Initial position for placing windows.
+    That is, left top position of placed windows. </li>
   <li> "MARGIN_X|Y": Margin between next windows. </li>
 </ul>
 
