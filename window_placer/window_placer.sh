@@ -70,7 +70,7 @@ function place_windows_from_string(){
     X=$STARTX;
     Y=$STARTY;
     echo $MAXW $MAXH;
-    wmctrl -l -G | grep $1 | while read line;
+    wmctrl -l -G | grep -e "$1" | while read line;
     do
 	ID=`get_window_id_from_line "$line"`;
 	RECT=`get_window_size_from_line "$line"`;
