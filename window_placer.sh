@@ -29,6 +29,10 @@ function get_window_size_from_line(){
     echo $RET;
 }
 
+function get_dnd_size(){
+    get_window_size_from_line "`wmctrl -l -G | grep DND | head -1`";
+}
+
 function get_window_id_from_string(){
     wmctrl -l | grep $1 | while read line;
     do
