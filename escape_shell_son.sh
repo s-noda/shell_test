@@ -36,6 +36,7 @@ do
         PARAM_Y=$TMP_PARAM_Y;
         CMD="${DEF_CMD}${PARAM_X},${PARAM_Y},${PARAM_W},${PARAM_H}";
         echo -e "\e[1;32m $CMD \e[m";
+        wmctrl -i -R $WIN;
         echo $CMD | /bin/sh;
     else
         echo -e "\e[1;31m ${DIFFDIFF} > 10000 \e[m";
