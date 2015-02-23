@@ -25,6 +25,7 @@ function convert_image_small(){
 }
 
 function draw_image(){
+    ## set -x;
     IN_PATH="test.png";
     if [ "$1" ];
     then
@@ -44,11 +45,13 @@ function draw_image(){
     IN_PATH="/tmp/tmp.png";
     WIDTH=`convert $IN_PATH -format '%[width]' info:-`;
     HEIGHT=`convert $IN_PATH -format '%[height]' info:-`;
+    OUTPUT="";
     y=0;
     while [ "$y" -lt "$HEIGHT" ];
     do
 	x=0;
-	DRAW_LINE="echo -n -e \"";
+	DRAW_LINE="";
+	## DRAW_LINE="echo -n -e \"";
 	while [ "$x" -lt "$WIDTH" ];
 	do
 	    CMD="convert $IN_PATH -format '%[pixel:p{${x},${y}}]' info:-";
@@ -61,11 +64,21 @@ function draw_image(){
 	    DRAW_LINE="${DRAW_LINE}${color}　"
 	    x=`expr $x + 1`;
 	done
-	eval "${DRAW_LINE}\"";
+	eval "echo -n -e \"${DRAW_LINE}\"";
 	echo -e "${CLEAR}";
 	y=`expr $y + 1`;
+	OUTPUT="${OUTPUT}${DRAW_LINE}${CLEAR}";
+	if [ "$y" -lt "$HEIGHT" ];
+	then
+	    OUTPUT="${OUTPUT}\n";
+	fi
     done
     echo -e "${CLEAR}";
+    ## echo "${OUTPUT}${CLEAR}";
+}
+
+function set_image_PS1(){
+    export PS1="`draw_image $@` $ ";
 }
 
 test_paint_colors;
