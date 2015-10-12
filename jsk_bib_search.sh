@@ -30,7 +30,7 @@ function parse_jsk_bib_html(){
         else
             if [ "$MODE" -eq "$IN" ];
             then
-                BUF="${BUF} `echo $line | sed -e \"s/<.\+>//g\"`";
+                BUF="${BUF} `echo $line | sed -e \"s/<[^>]\+>//g\"`";
             fi
         fi
     done
