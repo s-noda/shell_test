@@ -39,43 +39,45 @@ function parse_jsk_bib_html(){
 function file_id_reset(){ echo -n "0" > /tmp/id.dat; }
 function file_id_next(){ ID=`cat /tmp/id.dat`; echo -n "`expr $ID + 1`" > /tmp/id.dat; echo $ID; }
 
-NAME="Murooka\|MUROOKA\|室岡";
-##"Noda\|NODA\|野田";
-echo "parse jsk_bib for $NAME in last 5 years...";
-file_id_reset;
+function gen_bib(){
+    NAME="Murooka\|MUROOKA\|室岡";
+    if [ "$1" ]; then NAME=$1; fi ##"Noda\|NODA\|野田";
+    echo "parse jsk_bib for $NAME in last 5 years...";
+    file_id_reset;
 
-TYPE="toukou";
-echo -e "\e[41m >> Journals \e[m";
-for year in 10 11 12 13 14 15;
-do
-    curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-    nkf -Ew --overwrite out.html
-    parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+    TYPE="toukou";
+    echo -e "\e[41m >> Journals \e[m";
+    for year in 10 11 12 13 14 15;
     do
-        echo -e "\e[31m [`file_id_next`] $line \e[m";
+	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
+	nkf -Ew --overwrite out.html
+	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+	do
+            echo -e "\e[31m [`file_id_next`] $line \e[m";
+	done
     done
-done
 
-TYPE="international";
-echo -e "\e[42m >> International Conference \e[m";
-for year in 10 11 12 13 14 15;
-do
-    curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-    nkf -Ew --overwrite out.html
-    parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+    TYPE="international";
+    echo -e "\e[42m >> International Conference \e[m";
+    for year in 10 11 12 13 14 15;
     do
-        echo -e "\e[32m [`file_id_next`] $line \e[m";
+	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
+	nkf -Ew --overwrite out.html
+	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+	do
+            echo -e "\e[32m [`file_id_next`] $line \e[m";
+	done
     done
-done
 
-TYPE="domestic";
-echo -e "\e[43m >> Domestic Conference \e[m";
-for year in 10 11 12 13 14 15;
-do
-    curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-    nkf -Ew --overwrite out.html
-    parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+    TYPE="domestic";
+    echo -e "\e[43m >> Domestic Conference \e[m";
+    for year in 10 11 12 13 14 15;
     do
-        echo -e "\e[33m [`file_id_next`] $line \e[m";
+	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
+	nkf -Ew --overwrite out.html
+	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+	do
+            echo -e "\e[33m [`file_id_next`] $line \e[m";
+	done
     done
-done
+}
