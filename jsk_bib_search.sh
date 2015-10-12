@@ -40,44 +40,34 @@ function file_id_reset(){ echo -n "0" > /tmp/id.dat; }
 function file_id_next(){ ID=`cat /tmp/id.dat`; echo -n "`expr $ID + 1`" > /tmp/id.dat; echo $ID; }
 
 function gen_bib(){
-    NAME="Murooka\|MUROOKA\|室岡";
-    if [ "$1" ]; then NAME=$1; fi ##"Noda\|NODA\|野田";
+    NAME="Murooka\|MUROOKA\|室岡"; if [ "$1" ]; then NAME=$1; fi;
+    YEAR_ALL="10 11 12 13 14 15"; if [ "$2" ]; then YEAR_ALL=$2; fi;
+    ECHO_COLOR="31"; if [ "$3" ]; then ECHO_COLOR=$3; fi;
+    TYPE="toukou";  if [ "$4" ]; then TYPE=$4; fi;
+
+    for year in ${YEAR_ALL};
+    do
+	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
+	nkf -Ew --overwrite out.html
+	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
+	do
+            echo -e "\e[${ECHO_COLOR}m [`file_id_next`] $line \e[m";
+	done
+    done
+}
+
+function gen_bib_all(){
+    NAME="Murooka\|MUROOKA\|室岡"; if [ "$1" ]; then NAME=$1; fi ##"Noda\|NODA\|野田";
+    YEAR_ALL="10 11 12 13 14 15"; if [ "$2" ]; then YEAR_ALL=$2; fi;
     echo "parse jsk_bib for $NAME in last 5 years...";
     file_id_reset;
 
-    TYPE="toukou";
     echo -e "\e[41m >> Journals \e[m";
-    for year in 10 11 12 13 14 15;
-    do
-	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-	nkf -Ew --overwrite out.html
-	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
-	do
-            echo -e "\e[31m [`file_id_next`] $line \e[m";
-	done
-    done
+    gen_bib "$NAME" "$YEAR_ALL" "31" "toukou";
 
-    TYPE="international";
     echo -e "\e[42m >> International Conference \e[m";
-    for year in 10 11 12 13 14 15;
-    do
-	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-	nkf -Ew --overwrite out.html
-	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
-	do
-            echo -e "\e[32m [`file_id_next`] $line \e[m";
-	done
-    done
+    gen_bib "$NAME" "$YEAR_ALL" "32" "international";
 
-    TYPE="domestic";
     echo -e "\e[43m >> Domestic Conference \e[m";
-    for year in 10 11 12 13 14 15;
-    do
-	curl -s -A "Mozilla/5" "http://www.jsk.t.u-tokyo.ac.jp/cgi-bin/bib/bib2htm.cgi?file=${year}&mode=${TYPE}&lang=en" -o out.html;
-	nkf -Ew --overwrite out.html
-	parse_jsk_bib_html out.html | grep -e "$NAME" | while read line;
-	do
-            echo -e "\e[33m [`file_id_next`] $line \e[m";
-	done
-    done
+    gen_bib "$NAME" "$YEAR_ALL" "33" "domestic";
 }
