@@ -15,4 +15,4 @@ text_image.sh
 jsk_bib_search.sh
 -------------
 
-```source jsk_bib_search.sh ; gen_bib "Murooka\|MUROOKA"```
+```source jsk_bib_search.sh ; gen_bib_all "Murooka\|MUROOKA" "13 14 15"```
