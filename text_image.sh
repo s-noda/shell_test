@@ -63,5 +63,25 @@ function draw_rainbow_text_wall(){
     draw_rainbow_text "$TEXT_BUF" $OUTPATH;
 }
 
+function overlay_rainbow_text_wall(){
+    TEXT=$1;
+    ORG_PATH="input.png";
+    ORG_PATH_TMP="/tmp/$ORG_PATH";
+    OUTPATH="output.png";
+    ROW=10;
+    COL=10;
+    if [ "$2" ]; then ORG_PATH=$2; fi
+    if [ "$3" ]; then OUTPATH=$2; fi
+    if [ "$4" ]; then ROW=$3; fi
+    if [ "$5" ]; then COL=$4; fi
+    draw_rainbow_text_wall $TEXT $OUTPATH $ROW $COL;
+    ##
+    WIDTH=`convert $OUTPATH -format '%[width]' info:-`;
+    HEIGHT=`convert $OUTPATH -format '%[height]' info:-`;
+    convert $ORG_PATH -resize ${WIDTH}x${HEIGHT} $ORG_PATH_TMP;
+    composite -dissolve 25%x25% $OUTPATH $ORG_PATH_TMP $OUTPATH;
+}
+
 ## source text_image.sh ; draw_rainbow_text_wall "無価値" mukachi.png 30 20
 ## source text_image.sh ; draw_rainbow_text_wall "金" kane.png 30 60
+## source text_image.sh; overlay_rainbow_text_wall "あほ";
