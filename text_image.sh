@@ -71,15 +71,15 @@ function overlay_rainbow_text_wall(){
     ROW=10;
     COL=10;
     if [ "$2" ]; then ORG_PATH=$2; fi
-    if [ "$3" ]; then OUTPATH=$2; fi
-    if [ "$4" ]; then ROW=$3; fi
-    if [ "$5" ]; then COL=$4; fi
+    if [ "$3" ]; then OUTPATH=$3; fi
+    if [ "$4" ]; then ROW=$4; fi
+    if [ "$5" ]; then COL=$5; fi
     draw_rainbow_text_wall $TEXT $OUTPATH $ROW $COL;
     ##
     WIDTH=`convert $OUTPATH -format '%[width]' info:-`;
     HEIGHT=`convert $OUTPATH -format '%[height]' info:-`;
     convert $ORG_PATH -resize ${WIDTH}x${HEIGHT} $ORG_PATH_TMP;
-    composite -dissolve 25%x25% $OUTPATH $ORG_PATH_TMP $OUTPATH;
+    composite -dissolve 10%x50% $OUTPATH $ORG_PATH_TMP $OUTPATH;
 }
 
 ## source text_image.sh ; draw_rainbow_text_wall "無価値" mukachi.png 30 20
