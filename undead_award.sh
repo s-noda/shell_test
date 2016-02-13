@@ -42,5 +42,6 @@ do
         MAIN_STEP=1;
     fi
     MAIN_CNT=`expr $MAIN_CNT + $MAIN_STEP`;
-    echo -ne "\\033c\e[32m$`arrow_str $MAIN_CNT`award\e[m";
+    echo -ne "\\033c\e[32m`arrow_str $MAIN_CNT`award\e[m";
+    sleep 0.01;
 done
