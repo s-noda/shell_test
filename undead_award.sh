@@ -13,6 +13,10 @@ function hander() {
     sleep 0.5;
 }
 
+function stop_hander() {
+    echo "stop?";
+}
+
 function arrow_str() {
     CNT=0;
     RET="";
@@ -28,6 +32,7 @@ function arrow_str() {
 ## main
 
 trap hander SIGINT
+## trap stop_hander SIGTSTP
 
 MAIN_CNT=0;
 MAIN_STEP=1;
